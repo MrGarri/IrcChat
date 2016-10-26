@@ -7,7 +7,7 @@ import javax.jms.Message;
 
 public interface PetitionProcessor {
 
-    Pair<Destination, Message> register(String user, String password);
+    Pair register(String user, String password);
 
     Pair<Destination, Message> login(String user, String password);
 
