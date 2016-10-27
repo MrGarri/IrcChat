@@ -18,7 +18,7 @@ public class PetitionProcessorImpl implements PetitionProcessor {
     @Override
     public Pair<Destination, Message> register(String user, String password) {
 
-        String message = "";
+        String message;
 
         if (server.getUsersManager().userExists(user)) {
             message = "User already exists";
@@ -35,12 +35,16 @@ public class PetitionProcessorImpl implements PetitionProcessor {
     @Override
     public Pair<Destination, Message> login(String user, String password) {
 
-        if(server.getUsersManager().login(user, password))
-            return new Pair(server.getDestinations().getReplyDestination(),
-                    server.getContext().createTextMessage("Log in successful!"));
+        String message;
+
+        if (server.getUsersManager().login(user, password)) {
+            message = "Log in successful!";
+        } else {
+            message = "Failed to log in. Try again";
+        }
 
         return new Pair(server.getDestinations().getReplyDestination(),
-                server.getContext().createTextMessage("Failed to log in. Try again"));
+                server.getContext().createTextMessage(message));
 
     }
 
