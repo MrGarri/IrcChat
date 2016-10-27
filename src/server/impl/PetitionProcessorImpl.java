@@ -1,5 +1,6 @@
 package server.impl;
 
+import common.User;
 import javafx.util.Pair;
 import server.PetitionProcessor;
 import server.Server;
@@ -21,7 +22,7 @@ public class PetitionProcessorImpl implements PetitionProcessor {
         String message;
 
         if (server.getUsersManager().userExists(user)) {
-            message = "User already exists";
+            message = "User " + user + " already exists";
         } else {
             server.getUsersManager().addUser(user, password);
             message = "Successfully registered!";
@@ -49,12 +50,26 @@ public class PetitionProcessorImpl implements PetitionProcessor {
     }
 
     @Override
-    public Pair<Destination, Message> createRoom(String name, String user) {
-        return null;
+    public Pair<Destination, Message> createRoom(String name, User user) {
+
+        String message;
+
+        if(server.getRoomsManager().roomExists(name)) {
+            message = "Room " + name + " already exists";
+        } else {
+            server.getRoomsManager().addRoom(name, user);
+            message = "Room successfully created!";
+        }
+
+        return new Pair(server.getDestinations().getRoomsTopic(),
+                server.getContext().createTextMessage(message));
+
     }
 
     @Override
-    public Pair<Destination, Message> removeRoom(String name, String user) {
+    public Pair<Destination, Message> removeRoom(String name, User user) {
+
         return null;
+
     }
 }

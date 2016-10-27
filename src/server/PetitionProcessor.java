@@ -1,5 +1,6 @@
 package server;
 
+import common.User;
 import javafx.util.Pair;
 
 import javax.jms.Destination;
@@ -11,8 +12,8 @@ public interface PetitionProcessor {
 
     Pair<Destination, Message> login(String user, String password);
 
-    Pair<Destination, Message> createRoom(String name, String user);
+    Pair<Destination, Message> createRoom(String name, User user);
 
-    Pair<Destination, Message> removeRoom(String name, String user);
+    Pair<Destination, Message> removeRoom(String name, User user);
 
 }

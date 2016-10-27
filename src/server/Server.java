@@ -7,5 +7,6 @@ public interface Server {
     UsersManager getUsersManager();
     DestinationsManager getDestinations();
     JMSContext getContext();
+    RoomsManager getRoomsManager();
 
 }
