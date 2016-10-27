@@ -6,7 +6,7 @@ import javafx.util.Pair;
 import javax.jms.Destination;
 import javax.jms.Message;
 
-public interface PetitionProcessor {
+public interface RequestsHandler {
 
     Pair register(String user, String password);
 

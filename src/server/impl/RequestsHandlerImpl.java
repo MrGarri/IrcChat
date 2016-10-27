@@ -2,17 +2,17 @@ package server.impl;
 
 import common.User;
 import javafx.util.Pair;
-import server.PetitionProcessor;
+import server.RequestsHandler;
 import server.Server;
 
 import javax.jms.Destination;
 import javax.jms.Message;
 
-public class PetitionProcessorImpl implements PetitionProcessor {
+public class RequestsHandlerImpl implements RequestsHandler {
 
     public Server server;
 
-    public PetitionProcessorImpl(Server server) {
+    public RequestsHandlerImpl(Server server) {
         this.server = server;
     }
 
@@ -69,7 +69,21 @@ public class PetitionProcessorImpl implements PetitionProcessor {
     @Override
     public Pair<Destination, Message> removeRoom(String name, User user) {
 
-        return null;
+        String message;
+
+        if(server.getRoomsManager().roomExists(name)) {
+            if(server.getRoomsManager().isOwner(name, user)) {
+                server.getRoomsManager().removeRoom(name);
+                message = "Room " + name + " successfully removed";
+            } else {
+                message = "You're not the owner of the room " + name;
+            }
+        } else {
+            message = "Room " + name + " doesn't exists";
+        }
+
+        return new Pair(server.getDestinations().getRoomsTopic(),
+                server.getContext().createTextMessage(message));
 
     }
 }
