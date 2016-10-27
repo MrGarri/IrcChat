@@ -1,13 +1,8 @@
 package server.impl;
 
-import com.sun.messaging.jmq.jmsclient.JMSContextImpl;
-import com.sun.messaging.jmq.jmsclient.MessageConsumerImpl;
-import com.sun.messaging.jmq.jmsclient.ObjectMessageImpl;
-import com.sun.messaging.jmq.jmsclient.TextMessageImpl;
 import javafx.util.Pair;
 import server.PetitionProcessor;
 import server.Server;
-import sun.plugin2.message.TextEventMessage;
 
 import javax.jms.Destination;
 import javax.jms.Message;
@@ -23,13 +18,17 @@ public class PetitionProcessorImpl implements PetitionProcessor {
     @Override
     public Pair<Destination, Message> register(String user, String password) {
 
+        String message = "";
+
         if (server.getUsersManager().userExists(user)) {
-            return new Pair(server.getDestinations().getReplyDestination(),
-                    server.getContext().createTextMessage("User already exists"));
+            message = "User already exists";
+        } else {
+            server.getUsersManager().addUser(user, password);
+            message = "Successfully registered!";
         }
 
         return new Pair(server.getDestinations().getReplyDestination(),
-                server.getContext().createTextMessage("Succesfully registered!"));
+                server.getContext().createTextMessage(message));
 
     }
 
