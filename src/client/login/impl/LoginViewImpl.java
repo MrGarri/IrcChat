@@ -11,9 +11,9 @@ import java.awt.event.ActionEvent;
 
 public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView {
 
-
     JPasswordField password;
     JTextField user;
+    JPanel panel;
 
     @Override
     public void initialize() {
@@ -42,7 +42,7 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
         LoginFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Create a Panel to show on our frame.
-        JPanel panel = new JPanel();
+        this.panel = new JPanel();
         LoginFrame.add(panel);
         setComponents(panel);
 
@@ -167,4 +167,7 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
         this.password = passwordField;
     }
 
+    public void showAlert(String message, String title){
+        JOptionPane.showMessageDialog(panel, message, title, JOptionPane.WARNING_MESSAGE);
+    }
 }
