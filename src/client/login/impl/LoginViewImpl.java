@@ -8,12 +8,15 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView {
 
     JPasswordField password;
     JTextField user;
     JPanel panel;
+    JFrame LoginFrame;
 
     @Override
     public void initialize() {
@@ -31,7 +34,7 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
     }
 
     private void createAndShowGUI(String title){
-        JFrame LoginFrame =  new JFrame(title);
+        this.LoginFrame =  new JFrame(title);
 
         // Set graphics settings, like size and position.
         LoginFrame.setSize(300,150);
@@ -74,7 +77,14 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
 
         JPasswordField passwordText = new JPasswordField();
         passwordText.setBounds(95, 50, 190, 25);
+        passwordText.setToolTipText("La contraseña debe de tener un minimo de 6 caracteres.");
         panel.add(passwordText);
+
+        passwordText.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                checkComponents(userText,passwordText);
+            }
+        });
 
         // Button elements.
         JButton loginButton = new JButton (new AbstractAction("Login") {
@@ -165,9 +175,18 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
     private void checkComponents(JTextField userField, JPasswordField passwordField){
         this.user = userField;
         this.password = passwordField;
+        getPresenter().onLogin();
+
     }
 
-    public void showAlert(String message, String title){
+    public void showError(String message, String title){
         JOptionPane.showMessageDialog(panel, message, title, JOptionPane.WARNING_MESSAGE);
+
     }
+
+    public void close(){
+        this.close();
+    }
+
+
 }
