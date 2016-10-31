@@ -11,7 +11,9 @@ import java.awt.event.ActionEvent;
 
 public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView {
 
-    String [] credentials;
+
+    JPasswordField password;
+    JTextField user;
 
     @Override
     public void initialize() {
@@ -20,12 +22,12 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
 
     @Override
     public String getUser() {
-        return credentials[0];
+        return user.getText();
     }
 
     @Override
     public String getPassword() {
-        return credentials[1];
+        return password.getPassword().toString();
     }
 
     private void createAndShowGUI(String title){
@@ -161,7 +163,8 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
     }
 
     private void checkComponents(JTextField userField, JPasswordField passwordField){
-        this.credentials = new String[] {userField.getText(),passwordField.getPassword().toString()};
+        this.user = userField;
+        this.password = passwordField;
     }
 
 }
