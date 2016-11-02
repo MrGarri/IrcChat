@@ -1,0 +1,39 @@
+package server.impl;
+
+import common.Room;
+import common.User;
+import server.RoomsManager;
+import server.Server;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class RoomsManagerImpl implements RoomsManager {
+
+    Map<String, Room> rooms = new HashMap<>();
+    Server server;
+
+    public RoomsManagerImpl(Server server) {
+        this.server = server;
+    }
+
+    @Override
+    public boolean roomExists(String name) {
+        return false;
+    }
+
+    @Override
+    public Room addRoom(String name, User user) {
+        return null;
+    }
+
+    @Override
+    public boolean isOwner(String name, User user) {
+        return false;
+    }
+
+    @Override
+    public Room removeRoom(String name) {
+        return null;
+    }
+}

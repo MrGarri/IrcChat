@@ -6,7 +6,6 @@ public class Room {
     public String name;
 
     public Room(User user, String name) {
-
         this.user = user;
         this.name = name;
     }
