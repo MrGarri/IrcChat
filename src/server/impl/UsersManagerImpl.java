@@ -27,6 +27,10 @@ public class UsersManagerImpl implements UsersManager{
 
     @Override
     public boolean login(String username, String password) {
-        return false;
+
+        User user = users.get(username);
+
+        return user.getPassword().equals(password);
+
     }
 }
