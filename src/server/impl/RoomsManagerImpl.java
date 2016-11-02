@@ -29,12 +29,16 @@ public class RoomsManagerImpl implements RoomsManager {
         rooms.put(name, room);
 
         return room;
-        
+
     }
 
     @Override
     public boolean isOwner(String name, User user) {
-        return false;
+
+        Room room = rooms.get(name);
+
+        return room.getUser().equals(user);
+
     }
 
     @Override
