@@ -5,7 +5,7 @@ public class Room {
     public User user;
     public String name;
 
-    public Room(User user, String name) {
+    public Room(String name, User user) {
         this.user = user;
         this.name = name;
     }

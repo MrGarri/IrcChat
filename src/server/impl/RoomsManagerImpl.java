@@ -19,7 +19,7 @@ public class RoomsManagerImpl implements RoomsManager {
 
     @Override
     public boolean roomExists(String name) {
-        return false;
+        return rooms.containsKey(name);
     }
 
     @Override
