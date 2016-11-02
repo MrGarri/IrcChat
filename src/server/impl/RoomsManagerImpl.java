@@ -24,7 +24,12 @@ public class RoomsManagerImpl implements RoomsManager {
 
     @Override
     public Room addRoom(String name, User user) {
-        return null;
+
+        Room room = new Room(name, user);
+        rooms.put(name, room);
+
+        return room;
+        
     }
 
     @Override
