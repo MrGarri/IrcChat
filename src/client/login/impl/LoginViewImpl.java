@@ -8,15 +8,13 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView {
 
     JPasswordField password;
     JTextField user;
     JPanel panel;
-    JFrame LoginFrame;
+    JFrame loginFrame;
 
     @Override
     public void initialize() {
@@ -34,26 +32,26 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
     }
 
     private void createAndShowGUI(String title){
-        this.LoginFrame =  new JFrame(title);
+        this.loginFrame =  new JFrame(title);
 
         // Set graphics settings, like size and position.
-        LoginFrame.setSize(300,150);
-        LoginFrame.setLocationRelativeTo(null);
+        loginFrame.setSize(300,150);
+        loginFrame.setLocationRelativeTo(null);
 
         // Set options of the bar buttons.
-        LoginFrame.setResizable(false);
-        LoginFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        loginFrame.setResizable(false);
+        loginFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Create a Panel to show on our frame.
         this.panel = new JPanel();
-        LoginFrame.add(panel);
+        loginFrame.add(panel);
         setComponents(panel);
 
         // Show the frame.
-        LoginFrame.setVisible(true);
+        loginFrame.setVisible(true);
     }
 
-    private static boolean disableButtons(JTextField user, JPasswordField pass) {
+    private boolean disableButtons(JTextField user, JPasswordField pass) {
         return (user.getText().equals("") || pass.getPassword().length == 0);
     }
 
@@ -66,30 +64,24 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
         userLabel.setBounds(15, 15, 80, 25);
         panel.add(userLabel);
 
-        JTextField userText = new JTextField(20);
-        userText.setBounds(95, 15, 190, 25);
-        panel.add(userText);
+        user = new JTextField(20);
+        user.setBounds(95, 15, 190, 25);
+        panel.add(user);
 
         // Password elements.
         JLabel passwordLabel = new JLabel("Contraseña:");
         passwordLabel.setBounds(15, 50, 80, 25);
         panel.add(passwordLabel);
 
-        JPasswordField passwordText = new JPasswordField();
-        passwordText.setBounds(95, 50, 190, 25);
-        passwordText.setToolTipText("La contraseña debe de tener un minimo de 6 caracteres.");
-        panel.add(passwordText);
-
-        passwordText.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                checkComponents(userText,passwordText);
-            }
-        });
+        password = new JPasswordField();
+        password.setBounds(95, 50, 190, 25);
+        password.setToolTipText("La contraseña debe de tener un minimo de 6 caracteres.");
+        panel.add(password);
 
         // Button elements.
         JButton loginButton = new JButton (new AbstractAction("Login") {
             public void actionPerformed(ActionEvent e) {
-                checkComponents(userText,passwordText);
+                getPresenter().onLogin();
             }
         });
 
@@ -99,9 +91,11 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
 
         JButton registerButton = new JButton (new AbstractAction("Registrar") {
             public void actionPerformed(ActionEvent e) {
-                checkComponents(userText,passwordText);
+                getPresenter().onRegister();
             }
         });
+
+
 
         registerButton.setBounds(8, 90, 100, 30);
         panel.add(registerButton);
@@ -109,7 +103,7 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
         loginButton.setEnabled(false);
         registerButton.setEnabled(false);
 
-        userText.getDocument().addDocumentListener(new DocumentListener() {
+        user.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 changed();
@@ -126,7 +120,7 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
             }
 
             public void changed() {
-                if (disableButtons(userText, passwordText)){
+                if (disableButtons(user, password)){
                     loginButton.setEnabled(false);
                     registerButton.setEnabled(false);
                 }
@@ -139,7 +133,7 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
 
 
         });
-        passwordText.getDocument().addDocumentListener(new DocumentListener() {
+        password.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 changed();
@@ -156,7 +150,7 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
             }
 
             public void changed() {
-                if (disableButtons(userText, passwordText)){
+                if (disableButtons(user, password)){
                     loginButton.setEnabled(false);
                     registerButton.setEnabled(false);
                 }
@@ -172,20 +166,14 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
 
     }
 
-    private void checkComponents(JTextField userField, JPasswordField passwordField){
-        this.user = userField;
-        this.password = passwordField;
-        getPresenter().onLogin();
-
+    @Override
+    public void showError(String message){
+        JOptionPane.showMessageDialog(panel, message, "Error", JOptionPane.WARNING_MESSAGE);
     }
 
-    public void showError(String message, String title){
-        JOptionPane.showMessageDialog(panel, message, title, JOptionPane.WARNING_MESSAGE);
-
-    }
-
+    @Override
     public void close(){
-        this.close();
+        loginFrame.dispose();
     }
 
 
