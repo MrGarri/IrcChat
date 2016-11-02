@@ -11,15 +11,19 @@ import java.awt.event.ActionEvent;
 
 public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView {
 
-    JPasswordField password;
-    JTextField user;
-    JPanel panel;
-    JFrame loginFrame;
+    private JPasswordField password;
+    private JTextField user;
+
+    private JButton loginButton;
+    private JButton registerButton;
+
+    private JPanel panel;
+    private JFrame loginFrame;
 
     @Override
     public void initialize() {
         javax.swing.SwingUtilities.invokeLater(() -> createAndShowGUI("Login - SwaggaIRC"));
-    }
+}
 
     @Override
     public String getUser() {
@@ -51,10 +55,6 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
         loginFrame.setVisible(true);
     }
 
-    private boolean disableButtons(JTextField user, JPasswordField pass) {
-        return (user.getText().equals("") || pass.getPassword().length == 0);
-    }
-
     private void setComponents(JPanel panel){
 
         panel.setLayout(null);
@@ -79,7 +79,7 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
         panel.add(password);
 
         // Button elements.
-        JButton loginButton = new JButton (new AbstractAction("Login") {
+        loginButton = new JButton (new AbstractAction("Login") {
             public void actionPerformed(ActionEvent e) {
                 getPresenter().onLogin();
             }
@@ -89,13 +89,11 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
         loginButton.setBounds(190, 90, 100, 30);
         panel.add(loginButton);
 
-        JButton registerButton = new JButton (new AbstractAction("Registrar") {
+        registerButton = new JButton (new AbstractAction("Registrar") {
             public void actionPerformed(ActionEvent e) {
                 getPresenter().onRegister();
             }
         });
-
-
 
         registerButton.setBounds(8, 90, 100, 30);
         panel.add(registerButton);
@@ -103,67 +101,32 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
         loginButton.setEnabled(false);
         registerButton.setEnabled(false);
 
-        user.getDocument().addDocumentListener(new DocumentListener() {
+        DocumentListener listener = new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                changed();
+                disableButtons();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                changed();
+                disableButtons();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                changed();
+                disableButtons();
             }
+        };
 
-            public void changed() {
-                if (disableButtons(user, password)){
-                    loginButton.setEnabled(false);
-                    registerButton.setEnabled(false);
-                }
-                else {
-                    loginButton.setEnabled(true);
-                    registerButton.setEnabled(true);
-                }
+        user.getDocument().addDocumentListener(listener);
+        password.getDocument().addDocumentListener(listener);
 
-            }
+    }
 
-
-        });
-        password.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                changed();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                changed();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                changed();
-            }
-
-            public void changed() {
-                if (disableButtons(user, password)){
-                    loginButton.setEnabled(false);
-                    registerButton.setEnabled(false);
-                }
-                else {
-                    loginButton.setEnabled(true);
-                    registerButton.setEnabled(true);
-                }
-
-            }
-
-
-        });
-
+    private void disableButtons() {
+        boolean disabled = user.getText().trim().isEmpty() || password.getPassword().toString().isEmpty();
+        loginButton.setEnabled(!disabled);
+        registerButton.setEnabled(!disabled);
     }
 
     @Override
