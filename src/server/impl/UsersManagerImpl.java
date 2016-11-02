@@ -1,6 +1,7 @@
 package server.impl;
 
 import common.User;
+import server.Server;
 import server.UsersManager;
 
 import java.util.HashMap;
@@ -9,6 +10,11 @@ import java.util.Map;
 public class UsersManagerImpl implements UsersManager{
 
     Map<String, User> users = new HashMap<>();
+    Server server;
+
+    public UsersManagerImpl(Server server) {
+        this.server = server;
+    }
 
     @Override
     public boolean userExists(String username) {
