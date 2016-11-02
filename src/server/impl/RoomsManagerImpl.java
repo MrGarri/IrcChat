@@ -43,6 +43,10 @@ public class RoomsManagerImpl implements RoomsManager {
 
     @Override
     public Room removeRoom(String name) {
-        return null;
+
+        Room room = rooms.get(name);
+
+        return rooms.remove(name);
+
     }
 }
