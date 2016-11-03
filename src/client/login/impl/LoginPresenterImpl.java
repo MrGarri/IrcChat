@@ -15,4 +15,9 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
     public void onLogin() {
         //TODO
     }
+
+    @Override
+    public void onRegister() {
+        //TODO
+    }
 }
