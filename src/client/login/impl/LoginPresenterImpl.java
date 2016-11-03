@@ -1,6 +1,6 @@
 package client.login.impl;
 
-import client.base.BasePresenter;
+import client.base.impl.BasePresenter;
 import client.login.LoginPresenter;
 import client.login.LoginView;
 
@@ -8,7 +8,9 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
 
     @Override
     protected LoginView createView() {
-        return new LoginViewImpl();
+        LoginView loginView = new LoginViewImpl();
+        loginView.create(this);
+        return loginView;
     }
 
     @Override

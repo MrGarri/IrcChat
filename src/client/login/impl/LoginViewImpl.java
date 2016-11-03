@@ -1,6 +1,6 @@
 package client.login.impl;
 
-import client.base.BaseView;
+import client.base.impl.BaseFrameView;
 import client.login.LoginPresenter;
 import client.login.LoginView;
 
@@ -9,7 +9,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 
-public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView {
+public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements LoginView {
 
     private JPasswordField password;
     private JTextField user;
@@ -17,13 +17,10 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
     private JButton loginButton;
     private JButton registerButton;
 
-    private JPanel panel;
-    private JFrame loginFrame;
-
     @Override
-    public void initialize() {
-        javax.swing.SwingUtilities.invokeLater(() -> createAndShowGUI("Login - SwaggaIRC"));
-}
+    public String getTitle() {
+        return "Login - SwaggaIRC";
+    }
 
     @Override
     public String getUser() {
@@ -35,27 +32,22 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
         return password.getPassword().toString();
     }
 
-    private void createAndShowGUI(String title){
-        this.loginFrame =  new JFrame(title);
+    @Override
+    protected void initializeFrame(JFrame frame){
 
         // Set graphics settings, like size and position.
-        loginFrame.setSize(300,150);
-        loginFrame.setLocationRelativeTo(null);
+        frame.setSize(300,150);
+        frame.setLocationRelativeTo(null);
 
         // Set options of the bar buttons.
-        loginFrame.setResizable(false);
-        loginFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        // Create a Panel to show on our frame.
-        this.panel = new JPanel();
-        loginFrame.add(panel);
-        setComponents(panel);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Show the frame.
-        loginFrame.setVisible(true);
+        frame.setVisible(true);
     }
 
-    private void setComponents(JPanel panel){
+    protected void initializePanel(JPanel panel){
 
         panel.setLayout(null);
 
@@ -129,15 +121,7 @@ public class LoginViewImpl extends BaseView<LoginPresenter> implements LoginView
         registerButton.setEnabled(!disabled);
     }
 
-    @Override
-    public void showError(String message){
-        JOptionPane.showMessageDialog(panel, message, "Error", JOptionPane.WARNING_MESSAGE);
-    }
 
-    @Override
-    public void close(){
-        loginFrame.dispose();
-    }
 
 
 }
