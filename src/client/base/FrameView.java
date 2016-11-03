@@ -1,7 +1,10 @@
 package client.base;
 
-/**
- * Created by Diego on 3/11/16.
- */
-public interface FrameView {
+import javax.swing.*;
+
+public interface FrameView<P extends Presenter> extends View<P> {
+
+    void close();
+    JFrame getFrame();
+
 }
