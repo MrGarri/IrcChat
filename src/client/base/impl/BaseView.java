@@ -1,4 +1,7 @@
-package client.base;
+package client.base.impl;
+
+import client.base.Presenter;
+import client.base.View;
 
 import javax.swing.*;
 
