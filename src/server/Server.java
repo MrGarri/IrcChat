@@ -1,5 +1,7 @@
 package server;
 
+import common.DestinationsManager;
+
 import javax.jms.JMSContext;
 
 public interface Server {
@@ -9,4 +11,5 @@ public interface Server {
     JMSContext getContext();
     RoomsManager getRoomsManager();
 
+    Object getReplyDestination();
 }
