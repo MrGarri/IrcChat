@@ -1,31 +1,16 @@
 package common.impl;
 
-import common.ServerRequests;
 import common.User;
 
-public class CreateRoomRequest implements ServerRequests {
+public class CreateRoomRequest extends BaseServerRequest {
 
-    String name;
-    User user;
+    public CreateRoomRequest(String roomName) {
+        this.params.put("roomName", roomName);
+    }
 
     @Override
     public String getAction() {
         return "createRoom";
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
