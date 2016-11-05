@@ -1,7 +1,5 @@
 package common;
 
-import common.CommonDestinations;
-
 import javax.jms.JMSContext;
 import javax.jms.Queue;
 import javax.jms.Topic;
