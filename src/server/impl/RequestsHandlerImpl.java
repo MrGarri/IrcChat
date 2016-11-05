@@ -1,7 +1,6 @@
 package server.impl;
 
 import common.ServerRequest;
-import common.User;
 import common.impl.CreateRoomRequest;
 import common.impl.LoginRequest;
 import common.impl.RegisterRequest;
@@ -12,7 +11,6 @@ import server.Server;
 
 import javax.jms.Destination;
 import javax.jms.Message;
-import java.util.Map;
 
 public class RequestsHandlerImpl implements RequestsHandler {
 

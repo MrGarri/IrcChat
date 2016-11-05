@@ -26,6 +26,7 @@ public class ClientImpl implements Client, MessageListener {
             request.setUser(loggedUser);
             ObjectMessage message = context.createObjectMessage();
             message.setObject(request);
+            message.setJMSReplyTo(responseQueue);
 
             context.createProducer().send(getDestinationsManager().getRequestsQueue(), message);
             this.callback = callback;
@@ -72,10 +73,8 @@ public class ClientImpl implements Client, MessageListener {
 
     public static void main(String[] args){
         ConnectionFactory connectionFactory = new com.sun.messaging.ConnectionFactory();
-        try (JMSContext context = connectionFactory.createContext()) {
-            ClientImpl client = new ClientImpl(context);
-            client.run();
-        }
+        ClientImpl client = new ClientImpl(connectionFactory.createContext());
+        client.run();
     }
 
 }

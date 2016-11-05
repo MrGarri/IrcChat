@@ -11,7 +11,6 @@ import server.UsersManager;
 import javax.jms.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.function.Consumer;
 
 public class ServerImpl implements Server {
 
@@ -44,7 +43,7 @@ public class ServerImpl implements Server {
                 replyDestination = message.getJMSReplyTo();
                 ServerRequest request = message.getBody(ServerRequest.class);
 
-                Method method = requestsHandler.getClass().getMethod(request.getAction());
+                Method method = requestsHandler.getClass().getMethod(request.getAction(), ServerRequest.class);
                 Pair<Destination, Message> answer = (Pair<Destination, Message>) method.invoke(requestsHandler, request);
 
                 context.createProducer().send(answer.getKey(), answer.getValue());

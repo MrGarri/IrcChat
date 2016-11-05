@@ -1,7 +1,5 @@
 package common.impl;
 
-import common.User;
-
 import java.io.Serializable;
 
 public class CreateRoomRequest extends BaseServerRequest implements Serializable {

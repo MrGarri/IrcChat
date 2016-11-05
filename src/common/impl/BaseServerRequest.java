@@ -3,9 +3,6 @@ package common.impl;
 import common.ServerRequest;
 import common.User;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class BaseServerRequest implements ServerRequest {
 
     User user;
