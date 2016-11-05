@@ -23,4 +23,8 @@ public abstract class BasePresenter<V extends View> implements Presenter<V> {
     public V getView() {
         return view;
     }
+
+    public Client getClient() {
+        return client;
+    }
 }
