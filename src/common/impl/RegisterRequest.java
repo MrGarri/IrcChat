@@ -1,8 +1,8 @@
 package common.impl;
 
-import common.ServerRequests;
+import common.ServerRequest;
 
-public class RegisterRequest implements ServerRequests {
+public class RegisterRequest implements ServerRequest {
 
     String username;
     String password;

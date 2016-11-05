@@ -1,9 +1,9 @@
 package common.impl;
 
-import common.ServerRequests;
+import common.ServerRequest;
 import common.User;
 
-public class CreateRoomRequest implements ServerRequests {
+public class CreateRoomRequest implements ServerRequest {
 
     String name;
     User user;
