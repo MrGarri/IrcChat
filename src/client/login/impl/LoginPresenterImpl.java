@@ -1,10 +1,14 @@
 package client.login.impl;
 
+import client.RequestCallback;
 import client.base.impl.BasePresenter;
 import client.login.LoginPresenter;
 import client.login.LoginView;
+import common.ServerResponse;
+import common.impl.LoginRequest;
+import common.impl.RegisterRequest;
 
-public class LoginPresenterImpl extends BasePresenter<LoginView> implements LoginPresenter {
+public class LoginPresenterImpl extends BasePresenter<LoginView> implements LoginPresenter, RequestCallback {
 
     @Override
     protected LoginView createView() {
@@ -15,11 +19,21 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
 
     @Override
     public void onLogin() {
-        //TODO
+        getClient().makeRequest(new LoginRequest(), this);
     }
 
     @Override
     public void onRegister() {
-        //TODO
+        getClient().makeRequest(new RegisterRequest(), this);
+    }
+
+    @Override
+    public void success(ServerResponse response) {
+        getView().close();
+    }
+
+    @Override
+    public void failure(ServerResponse response) {
+        getView().showError((String) response.getParams().get("error"));
     }
 }

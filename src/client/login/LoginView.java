@@ -1,8 +1,8 @@
 package client.login;
 
-import client.base.View;
+import client.base.FrameView;
 
-public interface LoginView extends View<LoginPresenter> {
+public interface LoginView extends FrameView<LoginPresenter> {
 
     String getUser();
     String getPassword();
