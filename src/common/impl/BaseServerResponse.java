@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class baseServerResponse implements ServerResponse{
+public class BaseServerResponse implements ServerResponse{
 
     Map<String, Object> params = new HashMap<>();
     boolean success;
 
-    public baseServerResponse(boolean success) {
+    public BaseServerResponse(boolean success) {
         this.success = success;
     }
 
