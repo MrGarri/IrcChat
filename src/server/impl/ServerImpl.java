@@ -1,25 +1,67 @@
 package server.impl;
 
-import server.DestinationsManager;
+import common.DestinationsManager;
+import common.ServerRequest;
+import javafx.util.Pair;
+import server.RequestsHandler;
 import server.RoomsManager;
 import server.Server;
 import server.UsersManager;
 
-import javax.jms.JMSContext;
+import javax.jms.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.function.Consumer;
 
 public class ServerImpl implements Server {
+
+    private JMSContext context;
 
     private DestinationsManager destinationsManager;
     private RoomsManager roomsManager;
     private UsersManager usersManager;
-    private JMSContext context;
+    private RequestsHandler requestsHandler;
+    private Destination replyDestination;
 
-    public ServerImpl(DestinationsManager destinationsManager, RoomsManager roomsManager,
-                      UsersManager usersManager, JMSContext context) {
-        this.destinationsManager = destinationsManager;
-        this.roomsManager = roomsManager;
-        this.usersManager = usersManager;
+    public ServerImpl(JMSContext context) {
         this.context = context;
+
+        this.destinationsManager = new DestinationsManager(context);
+        this.roomsManager = new RoomsManagerImpl(this);
+        this.usersManager = new UsersManagerImpl(this);
+        this.requestsHandler = new RequestsHandlerImpl(this);
+    }
+
+    private void run() {
+        JMSConsumer requestsConsumer = context.createConsumer(destinationsManager.getRequestsQueue());
+        while(true){
+            Message message = requestsConsumer.receive();
+
+            //TODO: Get request
+            //String request = "login";
+
+            try {
+                replyDestination = message.getJMSReplyTo();
+                ServerRequest request = message.getBody(ServerRequest.class);
+
+                Method method = requestsHandler.getClass().getMethod(request.getAction());
+                Pair<Destination, Message> answer = (Pair<Destination, Message>) method.invoke(requestsHandler, request);
+
+                context.createProducer().send(answer.getKey(), answer.getValue());
+
+            } catch (JMSException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+            replyDestination = null;
+
+        }
     }
 
     @Override
@@ -42,10 +84,17 @@ public class ServerImpl implements Server {
         return roomsManager;
     }
 
+    @Override
+    public Object getReplyDestination() {
+        return replyDestination;
+    }
+
     public static void main(String[] args) {
-
-
-
+        ConnectionFactory connectionFactory = new com.sun.messaging.ConnectionFactory();
+        try(JMSContext context = connectionFactory.createContext()){
+            ServerImpl server = new ServerImpl(context);
+            server.run();
+        }
     }
 
 }
