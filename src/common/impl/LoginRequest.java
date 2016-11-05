@@ -1,19 +1,30 @@
 package common.impl;
 
-import common.ServerRequest;
-import common.User;
+import java.io.Serializable;
 
-public class LoginRequest extends BaseServerRequest {
+public class LoginRequest extends BaseServerRequest implements Serializable{
 
-    public LoginRequest(String username, String password) {
-        this.params.put(username, password);
-    }
+    String username;
+    String password;
 
     @Override
     public String getAction() {
         return "login";
     }
 
+    public String getUsername() {
+        return username;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
