@@ -1,5 +1,6 @@
 package server;
 
+import common.ServerRequest;
 import common.User;
 import javafx.util.Pair;
 
@@ -8,12 +9,12 @@ import javax.jms.Message;
 
 public interface RequestsHandler {
 
-    Pair register(String user, String password);
+    Pair<Destination, Message> register(ServerRequest request);
 
-    Pair<Destination, Message> login(String user, String password);
+    Pair<Destination, Message> login(ServerRequest request);
 
-    Pair<Destination, Message> createRoom(String name, User user);
+    Pair<Destination, Message> createRoom(ServerRequest request);
 
-    Pair<Destination, Message> removeRoom(String name, User user);
+    Pair<Destination, Message> removeRoom(ServerRequest request);
 
 }
