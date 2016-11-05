@@ -1,10 +1,8 @@
 package server.impl;
 
 import common.ServerRequest;
-import common.impl.CreateRoomRequest;
-import common.impl.LoginRequest;
-import common.impl.RegisterRequest;
-import common.impl.RemoveRoomRequest;
+import common.ServerResponse;
+import common.impl.*;
 import javafx.util.Pair;
 import server.RequestsHandler;
 import server.Server;
@@ -28,17 +26,17 @@ public class RequestsHandlerImpl implements RequestsHandler {
         String username = registerRequest.getUsername();
         String password = registerRequest.getPassword();
 
-        String message;
+        ServerResponse response;
 
         if (server.getUsersManager().userExists(username)) {
-            message = "User " + username + " already exists";
+            response = new ErrorServerResponse("User " + username + " already exists");
         } else {
             server.getUsersManager().addUser(username, password);
-            message = "Successfully registered!";
+            response = new BaseServerResponse(true);
         }
 
         return new Pair(server.getReplyDestination(),
-                server.getContext().createTextMessage(message));
+                server.getContext().createObjectMessage(response));
 
     }
 
@@ -50,16 +48,16 @@ public class RequestsHandlerImpl implements RequestsHandler {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
 
-        String message;
+        ServerResponse response;
 
         if (server.getUsersManager().login(username, password)) {
-            message = "Log in successful!";
+            response = new BaseServerResponse(true);
         } else {
-            message = "Failed to log in. Try again";
+            response = new ErrorServerResponse("Failed to log in. Try again");
         }
 
         return new Pair(server.getReplyDestination(),
-                server.getContext().createTextMessage(message));
+                server.getContext().createObjectMessage(response));
 
     }
 
@@ -70,17 +68,17 @@ public class RequestsHandlerImpl implements RequestsHandler {
 
         String roomName = createRoomRequest.getRoomName();
 
-        String message;
+        ServerResponse response;
 
         if(server.getRoomsManager().roomExists(roomName)) {
-            message = "Room " + roomName + " already exists";
+            response = new ErrorServerResponse("Room " + roomName + " already exists");
         } else {
             server.getRoomsManager().addRoom(roomName, createRoomRequest.getUser());
-            message = "Room successfully created!";
+            response = new BaseServerResponse(true);
         }
 
         return new Pair(server.getDestinations().getRoomsTopic(),
-                server.getContext().createTextMessage(message));
+                server.getContext().createObjectMessage(response));
 
     }
 
@@ -91,21 +89,21 @@ public class RequestsHandlerImpl implements RequestsHandler {
 
         String roomName = removeRoomRequest.getRoomName();
 
-        String message;
+        ServerResponse response;
 
         if(server.getRoomsManager().roomExists(roomName)) {
             if(server.getRoomsManager().isOwner(roomName, removeRoomRequest.getUser())) {
                 server.getRoomsManager().removeRoom(roomName);
-                message = "Room " + roomName + " successfully removed";
+                response = new BaseServerResponse(true);
             } else {
-                message = "You're not the owner of the room " + roomName;
+                response = new ErrorServerResponse("You're not the owner of the room " + roomName);
             }
         } else {
-            message = "Room " + roomName + " doesn't exists";
+            response = new ErrorServerResponse("Room " + roomName + " doesn't exists");
         }
 
         return new Pair(server.getDestinations().getRoomsTopic(),
-                server.getContext().createTextMessage(message));
+                server.getContext().createObjectMessage(response));
 
     }
 }

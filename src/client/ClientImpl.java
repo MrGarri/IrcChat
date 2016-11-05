@@ -21,7 +21,7 @@ public class ClientImpl implements Client, MessageListener {
     }
 
     @Override
-    public void makeRequest(ServerRequest request, RequestCallback callback){
+    public void sendRequest(ServerRequest request, RequestCallback callback){
         try {
             request.setUser(loggedUser);
             ObjectMessage message = context.createObjectMessage();

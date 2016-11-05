@@ -6,6 +6,7 @@ import client.login.LoginPresenter;
 import client.login.LoginView;
 import common.ServerResponse;
 import common.User;
+import common.impl.ErrorServerResponse;
 import common.impl.LoginRequest;
 import common.impl.RegisterRequest;
 
@@ -20,12 +21,12 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
 
     @Override
     public void onLogin() {
-        getClient().makeRequest(new LoginRequest(), this);
+        getClient().sendRequest(new LoginRequest(), this);
     }
 
     @Override
     public void onRegister() {
-        getClient().makeRequest(new RegisterRequest(), this);
+        getClient().sendRequest(new RegisterRequest(), this);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
     }
 
     @Override
-    public void failure(ServerResponse response) {
-        getView().showError((String) response.getParams().get("error"));
+    public void failure(ErrorServerResponse response) {
+        getView().showError(response.getError());
     }
 }

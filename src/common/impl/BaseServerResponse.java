@@ -2,12 +2,8 @@ package common.impl;
 
 import common.ServerResponse;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class BaseServerResponse implements ServerResponse{
 
-    Map<String, Object> params = new HashMap<>();
     boolean success;
 
     public BaseServerResponse(boolean success) {
@@ -19,12 +15,4 @@ public class BaseServerResponse implements ServerResponse{
         return success;
     }
 
-    @Override
-    public Map<String, Object> getParams() {
-        return params;
-    }
-
-    public void setParams(Map<String, Object> params) {
-        this.params = params;
-    }
 }
