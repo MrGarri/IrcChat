@@ -1,31 +1,23 @@
 package common.impl;
 
-import common.ServerRequest;
 import common.User;
 
-public class CreateRoomRequest implements ServerRequest {
+import java.io.Serializable;
 
-    String name;
-    User user;
+public class CreateRoomRequest extends BaseServerRequest implements Serializable {
+
+    String roomName;
 
     @Override
     public String getAction() {
         return "createRoom";
     }
 
-    public String getName() {
-        return name;
+    public String getRoomName() {
+        return roomName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 }

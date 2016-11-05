@@ -1,8 +1,11 @@
 package common.impl;
 
 import common.ServerRequest;
+import common.User;
 
-public class RegisterRequest implements ServerRequest {
+import java.io.Serializable;
+
+public class RegisterRequest extends BaseServerRequest implements Serializable {
 
     String username;
     String password;

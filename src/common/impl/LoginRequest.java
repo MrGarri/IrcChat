@@ -1,8 +1,8 @@
 package common.impl;
 
-import common.ServerRequest;
+import java.io.Serializable;
 
-public class LoginRequest implements ServerRequest {
+public class LoginRequest extends BaseServerRequest implements Serializable{
 
     String username;
     String password;

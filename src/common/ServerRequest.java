@@ -1,8 +1,6 @@
 package common;
 
-import java.io.Serializable;
-
-public interface ServerRequest extends Serializable {
+public interface ServerRequest {
 
     String getAction();
     User getUser();
