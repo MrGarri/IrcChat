@@ -2,10 +2,7 @@ package client;
 
 import client.base.Presenter;
 import client.login.impl.LoginPresenterImpl;
-import common.CommonDestinations;
-import common.DestinationsManager;
-import common.ServerRequest;
-import common.ServerResponse;
+import common.*;
 
 import javax.jms.*;
 
@@ -26,6 +23,7 @@ public class ClientImpl implements Client, MessageListener {
     @Override
     public void makeRequest(ServerRequest request, RequestCallback callback){
         try {
+            request.setUser(loggedUser);
             ObjectMessage message = context.createObjectMessage();
             message.setObject(request);
 
@@ -52,6 +50,11 @@ public class ClientImpl implements Client, MessageListener {
 
             callback = null;
         }
+    }
+
+    @Override
+    public void setUser(User user) {
+        this.loggedUser = user;
     }
 
     @Override
