@@ -1,6 +1,8 @@
 package common.impl;
 
-public class ErrorServerResponse extends BaseServerResponse{
+import java.io.Serializable;
+
+public class ErrorServerResponse extends BaseServerResponse implements Serializable {
 
     private String error;
 

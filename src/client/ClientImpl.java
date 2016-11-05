@@ -3,6 +3,7 @@ package client;
 import client.base.Presenter;
 import client.login.impl.LoginPresenterImpl;
 import common.*;
+import common.impl.ErrorServerResponse;
 
 import javax.jms.*;
 
@@ -43,7 +44,7 @@ public class ClientImpl implements Client, MessageListener {
                 if (response.wasSuccessful()) {
                     callback.success(response);
                 } else {
-                    callback.failure(response);
+                    callback.failure(message.getBody(ErrorServerResponse.class));
                 }
             } catch (JMSException e) {
                 callback.failure(null);

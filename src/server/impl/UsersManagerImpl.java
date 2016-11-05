@@ -33,10 +33,9 @@ public class UsersManagerImpl implements UsersManager{
 
     @Override
     public boolean login(String username, String password) {
-
         User user = users.get(username);
 
-        return user.getPassword().equals(password);
+        return user != null && user.getPassword().equals(password);
 
     }
 }

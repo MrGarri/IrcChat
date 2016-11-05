@@ -2,7 +2,7 @@ package common.impl;
 
 import common.ServerResponse;
 
-public class BaseServerResponse implements ServerResponse{
+public class BaseServerResponse implements ServerResponse {
 
     boolean success;
 

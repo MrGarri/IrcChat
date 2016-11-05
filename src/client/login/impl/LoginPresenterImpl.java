@@ -21,12 +21,18 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
 
     @Override
     public void onLogin() {
-        getClient().sendRequest(new LoginRequest(), this);
+        LoginRequest request = new LoginRequest();
+        request.setUsername(getView().getUser());
+        request.setPassword(getView().getPassword());
+        getClient().sendRequest(request, this);
     }
 
     @Override
     public void onRegister() {
-        getClient().sendRequest(new RegisterRequest(), this);
+        RegisterRequest request = new RegisterRequest();
+        request.setUsername(getView().getUser());
+        request.setPassword(getView().getPassword());
+        getClient().sendRequest(request, this);
     }
 
     @Override
