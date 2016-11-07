@@ -29,7 +29,7 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
 
     @Override
     public String getPassword() {
-        return password.getPassword().toString();
+        return new String(password.getPassword());
     }
 
     @Override
