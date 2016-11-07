@@ -1,6 +1,8 @@
 package server.impl;
 
-import common.User;
+import common.ServerRequest;
+import common.ServerResponse;
+import common.impl.*;
 import javafx.util.Pair;
 import server.RequestsHandler;
 import server.Server;
@@ -17,73 +19,91 @@ public class RequestsHandlerImpl implements RequestsHandler {
     }
 
     @Override
-    public Pair<Destination, Message> register(String user, String password) {
+    public Pair<Destination, Message> register(ServerRequest request) {
 
-        String message;
+        RegisterRequest registerRequest = (RegisterRequest) request;
 
-        if (server.getUsersManager().userExists(user)) {
-            message = "User " + user + " already exists";
+        String username = registerRequest.getUsername();
+        String password = registerRequest.getPassword();
+
+        ServerResponse response;
+
+        if (server.getUsersManager().userExists(username)) {
+            response = new ErrorServerResponse("User " + username + " already exists");
         } else {
-            server.getUsersManager().addUser(user, password);
-            message = "Successfully registered!";
+            server.getUsersManager().addUser(username, password);
+            response = new BaseServerResponse(true);
         }
 
-        return new Pair(server.getDestinations().getReplyDestination(),
-                server.getContext().createTextMessage(message));
+        return new Pair(server.getReplyDestination(),
+                server.getContext().createObjectMessage(response));
 
     }
 
     @Override
-    public Pair<Destination, Message> login(String user, String password) {
+    public Pair<Destination, Message> login(ServerRequest request) {
 
-        String message;
+        LoginRequest loginRequest = (LoginRequest)request;
 
-        if (server.getUsersManager().login(user, password)) {
-            message = "Log in successful!";
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+
+        ServerResponse response;
+
+        if (server.getUsersManager().login(username, password)) {
+            response = new BaseServerResponse(true);
         } else {
-            message = "Failed to log in. Try again";
+            response = new ErrorServerResponse("Failed to log in. Try again");
         }
 
-        return new Pair(server.getDestinations().getReplyDestination(),
-                server.getContext().createTextMessage(message));
+        return new Pair(server.getReplyDestination(),
+                server.getContext().createObjectMessage(response));
 
     }
 
     @Override
-    public Pair<Destination, Message> createRoom(String name, User user) {
+    public Pair<Destination, Message> createRoom(ServerRequest request) {
 
-        String message;
+        CreateRoomRequest createRoomRequest = (CreateRoomRequest)request;
 
-        if(server.getRoomsManager().roomExists(name)) {
-            message = "Room " + name + " already exists";
+        String roomName = createRoomRequest.getRoomName();
+
+        ServerResponse response;
+
+        if(server.getRoomsManager().roomExists(roomName)) {
+            response = new ErrorServerResponse("Room " + roomName + " already exists");
         } else {
-            server.getRoomsManager().addRoom(name, user);
-            message = "Room successfully created!";
+            server.getRoomsManager().addRoom(roomName, createRoomRequest.getUser());
+            response = new BaseServerResponse(true);
         }
 
         return new Pair(server.getDestinations().getRoomsTopic(),
-                server.getContext().createTextMessage(message));
+                server.getContext().createObjectMessage(response));
 
     }
 
     @Override
-    public Pair<Destination, Message> removeRoom(String name, User user) {
+    public Pair<Destination, Message> removeRoom(ServerRequest request) {
 
-        String message;
+        RemoveRoomRequest removeRoomRequest = (RemoveRoomRequest) request;
 
-        if(server.getRoomsManager().roomExists(name)) {
-            if(server.getRoomsManager().isOwner(name, user)) {
-                server.getRoomsManager().removeRoom(name);
-                message = "Room " + name + " successfully removed";
+        String roomName = removeRoomRequest.getRoomName();
+
+        ServerResponse response;
+
+        if(server.getRoomsManager().roomExists(roomName)) {
+            if(server.getRoomsManager().isOwner(roomName, removeRoomRequest.getUser())) {
+                server.getRoomsManager().removeRoom(roomName);
+                response = new BaseServerResponse(true);
             } else {
-                message = "You're not the owner of the room " + name;
+                response = new ErrorServerResponse("You're not the owner of the room " + roomName);
             }
         } else {
-            message = "Room " + name + " doesn't exists";
+            response = new ErrorServerResponse("Room " + roomName + " doesn't exists");
         }
 
         return new Pair(server.getDestinations().getRoomsTopic(),
-                server.getContext().createTextMessage(message));
+                server.getContext().createObjectMessage(response));
 
     }
 }
