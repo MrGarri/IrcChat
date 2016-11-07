@@ -2,6 +2,7 @@ package server.impl;
 
 import common.DestinationsManager;
 import common.ServerRequest;
+import common.impl.ErrorServerResponse;
 import javafx.util.Pair;
 import server.RequestsHandler;
 import server.RoomsManager;
@@ -46,7 +47,11 @@ public class ServerImpl implements Server {
                 Method method = requestsHandler.getClass().getMethod(request.getAction(), ServerRequest.class);
                 Pair<Destination, Message> answer = (Pair<Destination, Message>) method.invoke(requestsHandler, request);
 
-                context.createProducer().send(answer.getKey(), answer.getValue());
+                if(answer.getValue() instanceof ErrorServerResponse){
+                    context.createProducer().send(answer.getKey(), (ErrorServerResponse) answer.getValue());
+                } else {
+                    context.createProducer().send(answer.getKey(), answer.getValue());
+                }
 
             } catch (JMSException e) {
                 e.printStackTrace();

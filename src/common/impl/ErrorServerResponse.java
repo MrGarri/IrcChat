@@ -8,6 +8,7 @@ public class ErrorServerResponse extends BaseServerResponse implements Serializa
 
     public ErrorServerResponse(String error) {
         super(false);
+        this.error = error;
     }
 
     public String getError() {
