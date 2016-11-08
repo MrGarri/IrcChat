@@ -1,6 +1,6 @@
 package server;
 
-import common.ServerRequest;
+import common.messages.ServerRequest;
 import javafx.util.Pair;
 
 import javax.jms.Destination;

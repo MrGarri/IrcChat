@@ -4,11 +4,9 @@ import client.RequestCallback;
 import client.base.impl.BasePresenter;
 import client.login.LoginPresenter;
 import client.login.LoginView;
-import common.ServerResponse;
-import common.User;
-import common.impl.ErrorServerResponse;
-import common.impl.LoginRequest;
-import common.impl.RegisterRequest;
+import common.dto.User;
+import common.messages.impl.LoginRequest;
+import common.messages.impl.RegisterRequest;
 
 public class LoginPresenterImpl extends BasePresenter<LoginView> implements LoginPresenter, RequestCallback {
 
@@ -36,13 +34,13 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
     }
 
     @Override
-    public void success(ServerResponse response) {
+    public void success(Object response) {
         getClient().setUser(new User(getView().getUser(), getView().getPassword()));
         getView().close();
     }
 
     @Override
-    public void failure(ErrorServerResponse response) {
-        getView().showError(response.getError());
+    public void failure(String error) {
+        getView().showError(error);
     }
 }

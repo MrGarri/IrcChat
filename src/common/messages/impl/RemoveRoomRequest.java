@@ -1,14 +1,14 @@
-package common.impl;
+package common.messages.impl;
 
 import java.io.Serializable;
 
-public class CreateRoomRequest extends BaseServerRequest implements Serializable {
+public class RemoveRoomRequest extends BaseServerRequest implements Serializable{
 
     String roomName;
 
     @Override
     public String getAction() {
-        return "createRoom";
+        return "removeRoom";
     }
 
     public String getRoomName() {

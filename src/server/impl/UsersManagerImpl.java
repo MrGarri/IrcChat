@@ -1,6 +1,6 @@
 package server.impl;
 
-import common.User;
+import common.dto.User;
 import server.Server;
 import server.UsersManager;
 
