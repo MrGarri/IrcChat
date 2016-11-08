@@ -86,17 +86,18 @@ public class RequestsHandlerImpl implements RequestsHandler {
 
     @Override
     public Pair<Destination, Message> removeRoom(ServerRequest request) {
-
         RemoveRoomRequest removeRoomRequest = (RemoveRoomRequest) request;
-
         String roomName = removeRoomRequest.getRoomName();
 
-        ServerResponse response;
+        BaseServerResponse response;
+        Destination destination = (Destination) server.getReplyDestination();
 
         if(server.getRoomsManager().roomExists(roomName)) {
             if(server.getRoomsManager().isOwner(roomName, removeRoomRequest.getUser())) {
                 server.getRoomsManager().removeRoom(roomName);
-                response = new BaseServerResponse(true);
+                destination = server.getDestinations().getRoomsTopic();
+                response = new BaseServerResponse<List<Room>>(true);
+                response.setData(server.getRoomsManager().getRoomsList());
             } else {
                 response = new ErrorServerResponse("You're not the owner of the room " + roomName);
             }
@@ -104,7 +105,16 @@ public class RequestsHandlerImpl implements RequestsHandler {
             response = new ErrorServerResponse("Room " + roomName + " doesn't exists");
         }
 
-        return new Pair(server.getDestinations().getRoomsTopic(),
+        return new Pair(destination, server.getContext().createObjectMessage(response));
+    }
+
+
+    @Override
+    public Pair<Destination, Message> getRooms(ServerRequest request){
+        BaseServerResponse response = new BaseServerResponse<List<Room>>(true);
+        response.setData(server.getRoomsManager().getRoomsList());
+
+        return new Pair(server.getReplyDestination(),
                 server.getContext().createObjectMessage(response));
     }
 }
