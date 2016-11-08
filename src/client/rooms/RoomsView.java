@@ -1,7 +1,7 @@
 package client.rooms;
 
 import client.base.FrameView;
-import common.Room;
+import common.dto.Room;
 
 import java.util.List;
 

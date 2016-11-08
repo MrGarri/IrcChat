@@ -3,7 +3,7 @@ package client.rooms.impl;
 import client.base.impl.BaseFrameView;
 import client.rooms.RoomsPresenter;
 import client.rooms.RoomsView;
-import common.Room;
+import common.dto.Room;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -157,6 +157,7 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
             getPresenter().removeRoom(room);
         }
     }
+
 
     public void setRoomsList(List<Room> roomsList){
         jRoomsList.setListData(roomsList.toArray(new Room[roomsList.size()]));

@@ -1,7 +1,7 @@
 package client.rooms;
 
 import client.base.Presenter;
-import common.Room;
+import common.dto.Room;
 
 public interface RoomsPresenter extends Presenter<RoomsView> {
 
