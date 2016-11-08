@@ -1,5 +1,6 @@
 package server.impl;
 
+import common.dto.Room;
 import common.messages.ServerRequest;
 import common.messages.ServerResponse;
 import common.messages.impl.*;
@@ -9,6 +10,7 @@ import server.Server;
 
 import javax.jms.Destination;
 import javax.jms.Message;
+import java.util.List;
 
 public class RequestsHandlerImpl implements RequestsHandler {
 
@@ -63,22 +65,22 @@ public class RequestsHandlerImpl implements RequestsHandler {
 
     @Override
     public Pair<Destination, Message> createRoom(ServerRequest request) {
-
         CreateRoomRequest createRoomRequest = (CreateRoomRequest)request;
-
         String roomName = createRoomRequest.getRoomName();
 
-        ServerResponse response;
+        BaseServerResponse response;
+        Destination destination = (Destination) server.getReplyDestination();
 
         if(server.getRoomsManager().roomExists(roomName)) {
             response = new ErrorServerResponse("Room " + roomName + " already exists");
         } else {
             server.getRoomsManager().addRoom(roomName, createRoomRequest.getUser());
-            response = new BaseServerResponse(true);
+            destination = server.getDestinations().getRoomsTopic();
+            response = new BaseServerResponse<List<Room>>(true);
+            response.setData(server.getRoomsManager().getRoomsList());
         }
 
-        return new Pair(server.getDestinations().getRoomsTopic(),
-                server.getContext().createObjectMessage(response));
+        return new Pair(destination, server.getContext().createObjectMessage(response));
 
     }
 
@@ -104,6 +106,5 @@ public class RequestsHandlerImpl implements RequestsHandler {
 
         return new Pair(server.getDestinations().getRoomsTopic(),
                 server.getContext().createObjectMessage(response));
-
     }
 }

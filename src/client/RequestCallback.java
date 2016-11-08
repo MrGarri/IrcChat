@@ -1,11 +1,8 @@
 package client;
 
-import common.messages.ServerResponse;
-import common.messages.impl.ErrorServerResponse;
+public interface RequestCallback<T> {
 
-public interface RequestCallback {
-
-    void success(ServerResponse response);
-    void failure(ErrorServerResponse response);
+    void success(T response);
+    void failure(String error);
 
 }

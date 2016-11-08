@@ -12,7 +12,6 @@ public abstract class BaseServerRequest implements ServerRequest {
         return user;
     }
 
-    @Override
     public void setUser(User user) {
         this.user = user;
     }

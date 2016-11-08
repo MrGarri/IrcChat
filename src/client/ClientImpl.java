@@ -4,9 +4,8 @@ import client.base.Presenter;
 import client.login.impl.LoginPresenterImpl;
 import common.*;
 import common.dto.User;
-import common.messages.ServerRequest;
 import common.messages.ServerResponse;
-import common.messages.impl.ErrorServerResponse;
+import common.messages.impl.BaseServerRequest;
 
 import javax.jms.*;
 
@@ -25,7 +24,7 @@ public class ClientImpl implements Client, MessageListener {
     }
 
     @Override
-    public void sendRequest(ServerRequest request, RequestCallback callback){
+    public void sendRequest(BaseServerRequest request, RequestCallback callback){
         try {
             request.setUser(loggedUser);
             ObjectMessage message = context.createObjectMessage();
@@ -45,9 +44,9 @@ public class ClientImpl implements Client, MessageListener {
             try {
                 ServerResponse response = message.getBody(ServerResponse.class);
                 if (response.wasSuccessful()) {
-                    callback.success(response);
+                    callback.success(response.getData());
                 } else {
-                    callback.failure(message.getBody(ErrorServerResponse.class));
+                    callback.failure((String) response.getData());
                 }
             } catch (JMSException e) {
                 callback.failure(null);

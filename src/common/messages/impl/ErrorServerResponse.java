@@ -2,20 +2,11 @@ package common.messages.impl;
 
 import java.io.Serializable;
 
-public class ErrorServerResponse extends BaseServerResponse implements Serializable {
-
-    private String error;
+public class ErrorServerResponse extends BaseServerResponse<String> implements Serializable {
 
     public ErrorServerResponse(String error) {
         super(false);
-        this.error = error;
+        setData(error);
     }
 
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
 }
