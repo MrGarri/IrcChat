@@ -1,13 +1,13 @@
 package client;
 
 import common.CommonDestinations;
-import common.ServerRequest;
-import common.User;
+import common.dto.User;
+import common.messages.impl.BaseServerRequest;
 
 import javax.jms.JMSContext;
 
 public interface Client {
-    void sendRequest(ServerRequest request, RequestCallback callback);
+    void sendRequest(BaseServerRequest request, RequestCallback callback);
 
     JMSContext getContext();
 

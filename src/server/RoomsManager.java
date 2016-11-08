@@ -1,7 +1,9 @@
 package server;
 
-import common.Room;
-import common.User;
+import common.dto.Room;
+import common.dto.User;
+
+import java.util.List;
 
 public interface RoomsManager {
 
@@ -9,5 +11,6 @@ public interface RoomsManager {
     Room addRoom(String name, User user);
     boolean isOwner(String name, User user);
     Room removeRoom(String name);
+    List<Room> getRoomsList();
 
 }

@@ -1,15 +1,15 @@
-package common.impl;
+package common.messages.impl;
 
 import java.io.Serializable;
 
-public class RegisterRequest extends BaseServerRequest implements Serializable {
+public class LoginRequest extends BaseServerRequest implements Serializable {
 
     String username;
     String password;
 
     @Override
     public String getAction() {
-        return "register";
+        return "login";
     }
 
     public String getUsername() {

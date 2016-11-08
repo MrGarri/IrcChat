@@ -1,11 +1,13 @@
 package server.impl;
 
-import common.Room;
-import common.User;
+import common.dto.Room;
+import common.dto.User;
 import server.RoomsManager;
 import server.Server;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RoomsManagerImpl implements RoomsManager {
@@ -48,5 +50,10 @@ public class RoomsManagerImpl implements RoomsManager {
 
         return rooms.remove(name);
 
+    }
+
+    @Override
+    public List<Room> getRoomsList() {
+        return new ArrayList<>(rooms.values());
     }
 }
