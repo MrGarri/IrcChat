@@ -11,11 +11,10 @@ public abstract class BaseFrameView<P extends Presenter> extends BaseView<P> imp
 
     @Override
     public void initialize() {
-        frame = new JFrame(getTitle());
-        initializeFrame(frame);
-        frame.add(getPanel());
-
         javax.swing.SwingUtilities.invokeLater(() -> {
+            frame = new JFrame(getTitle());
+            initializeFrame(frame);
+            frame.add(getPanel());
             super.initialize();
         });
     }

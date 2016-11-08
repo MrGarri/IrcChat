@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements RoomsView, ListSelectionListener {
@@ -19,6 +20,10 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
     private JList<Room> jRoomsList;
     private JPanel chatPanel;
     private JSplitPane splitPane;
+
+    public RoomsViewImpl(){
+        jRoomsList = new JList<>();
+    }
 
     @Override
     public String getTitle() {
@@ -68,7 +73,6 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
         JPanel rightPanel = new JPanel(new BorderLayout());
 
         //Create the jRoomsList from availableRooms and put it in a scrollPane.
-        jRoomsList = new JList<>();
         jRoomsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jRoomsList.addListSelectionListener(this);
         JScrollPane listScrollPane = new JScrollPane(jRoomsList);
@@ -158,7 +162,7 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
         }
     }
 
-
+    @Override
     public void setRoomsList(List<Room> roomsList){
         jRoomsList.setListData(roomsList.toArray(new Room[roomsList.size()]));
     }
