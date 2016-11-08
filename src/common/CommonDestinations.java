@@ -6,6 +6,7 @@ import javax.jms.Topic;
 public interface CommonDestinations {
 
     String REQUESTS = "REQUESTS";
+    String ROOMS = "ROOMS";
 
     Queue getRequestsQueue();
 

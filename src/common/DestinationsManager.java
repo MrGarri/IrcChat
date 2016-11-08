@@ -10,6 +10,7 @@ public class DestinationsManager implements CommonDestinations {
     JMSContext context;
 
     Queue requestsQueue;
+    Topic roomsTopic;
 
     public DestinationsManager(JMSContext context){
         this.context = context;
@@ -25,8 +26,10 @@ public class DestinationsManager implements CommonDestinations {
 
     @Override
     public Topic getRoomsTopic() {
-        //TODO
-        return null;
+        if(roomsTopic == null)
+            roomsTopic = context.createTopic(ROOMS);
+
+        return roomsTopic;
     }
 
 }
