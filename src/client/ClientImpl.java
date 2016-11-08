@@ -55,6 +55,11 @@ public class ClientImpl implements Client, MessageListener {
     }
 
     @Override
+    public JMSContext getContext(){
+        return context;
+    }
+
+    @Override
     public void setUser(User user) {
         this.loggedUser = user;
     }
