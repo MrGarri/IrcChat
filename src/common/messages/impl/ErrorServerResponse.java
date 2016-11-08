@@ -1,4 +1,4 @@
-package common.impl;
+package common.messages.impl;
 
 import java.io.Serializable;
 

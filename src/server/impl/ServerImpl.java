@@ -1,8 +1,8 @@
 package server.impl;
 
 import common.DestinationsManager;
-import common.ServerRequest;
-import common.impl.ErrorServerResponse;
+import common.messages.ServerRequest;
+import common.messages.impl.ErrorServerResponse;
 import javafx.util.Pair;
 import server.RequestsHandler;
 import server.RoomsManager;

@@ -1,4 +1,6 @@
-package common;
+package common.messages;
+
+import common.dto.User;
 
 import java.io.Serializable;
 

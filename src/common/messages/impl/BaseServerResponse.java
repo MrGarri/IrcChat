@@ -1,6 +1,6 @@
-package common.impl;
+package common.messages.impl;
 
-import common.ServerResponse;
+import common.messages.ServerResponse;
 
 public class BaseServerResponse implements ServerResponse {
 

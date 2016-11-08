@@ -3,7 +3,10 @@ package client;
 import client.base.Presenter;
 import client.login.impl.LoginPresenterImpl;
 import common.*;
-import common.impl.ErrorServerResponse;
+import common.dto.User;
+import common.messages.ServerRequest;
+import common.messages.ServerResponse;
+import common.messages.impl.ErrorServerResponse;
 
 import javax.jms.*;
 

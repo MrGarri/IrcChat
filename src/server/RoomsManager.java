@@ -1,7 +1,7 @@
 package server;
 
-import common.Room;
-import common.User;
+import common.dto.Room;
+import common.dto.User;
 
 public interface RoomsManager {
 

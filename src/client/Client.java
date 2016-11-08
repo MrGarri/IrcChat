@@ -1,8 +1,8 @@
 package client;
 
 import common.CommonDestinations;
-import common.ServerRequest;
-import common.User;
+import common.messages.ServerRequest;
+import common.dto.User;
 
 public interface Client {
     void sendRequest(ServerRequest request, RequestCallback callback);

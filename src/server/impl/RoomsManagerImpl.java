@@ -1,7 +1,7 @@
 package server.impl;
 
-import common.Room;
-import common.User;
+import common.dto.Room;
+import common.dto.User;
 import server.RoomsManager;
 import server.Server;
 

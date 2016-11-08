@@ -1,8 +1,8 @@
 package server.impl;
 
-import common.ServerRequest;
-import common.ServerResponse;
-import common.impl.*;
+import common.messages.ServerRequest;
+import common.messages.ServerResponse;
+import common.messages.impl.*;
 import javafx.util.Pair;
 import server.RequestsHandler;
 import server.Server;

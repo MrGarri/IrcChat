@@ -1,7 +1,7 @@
-package common.impl;
+package common.messages.impl;
 
-import common.ServerRequest;
-import common.User;
+import common.messages.ServerRequest;
+import common.dto.User;
 
 public abstract class BaseServerRequest implements ServerRequest {
 

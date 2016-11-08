@@ -1,7 +1,7 @@
 package client;
 
-import common.ServerResponse;
-import common.impl.ErrorServerResponse;
+import common.messages.ServerResponse;
+import common.messages.impl.ErrorServerResponse;
 
 public interface RequestCallback {
 

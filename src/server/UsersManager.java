@@ -1,6 +1,6 @@
 package server;
 
-import common.User;
+import common.dto.User;
 
 public interface UsersManager {
 

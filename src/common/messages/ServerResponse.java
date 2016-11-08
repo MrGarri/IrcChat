@@ -1,7 +1,6 @@
-package common;
+package common.messages;
 
 import java.io.Serializable;
-import java.util.Map;
 
 public interface ServerResponse extends Serializable {
 
