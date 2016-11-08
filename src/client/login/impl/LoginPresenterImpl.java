@@ -1,9 +1,11 @@
 package client.login.impl;
 
 import client.RequestCallback;
+import client.base.Presenter;
 import client.base.impl.BasePresenter;
 import client.login.LoginPresenter;
 import client.login.LoginView;
+import client.rooms.impl.RoomsPresenterImpl;
 import common.ServerResponse;
 import common.User;
 import common.impl.ErrorServerResponse;
@@ -39,6 +41,9 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
     public void success(ServerResponse response) {
         getClient().setUser(new User(getView().getUser(), getView().getPassword()));
         getView().close();
+
+        Presenter roomsPresenter = new RoomsPresenterImpl();
+        roomsPresenter.initialize(getClient());
     }
 
     @Override
