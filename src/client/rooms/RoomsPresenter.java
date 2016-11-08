@@ -10,5 +10,5 @@ public interface RoomsPresenter extends Presenter<RoomsView> {
     void removeRoom(Room room);
 
     void selectRoom(Room room);
-    
+
 }
