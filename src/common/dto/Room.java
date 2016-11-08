@@ -1,6 +1,8 @@
 package common.dto;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable {
 
     public User user;
     public String name;
