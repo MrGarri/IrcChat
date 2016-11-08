@@ -25,7 +25,9 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
 
     @Override
     protected RoomsView createView() {
-        return new RoomsViewImpl();
+        RoomsView roomsView = new RoomsViewImpl();
+        roomsView.create(this);
+        return roomsView;
     }
 
     @Override
