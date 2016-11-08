@@ -41,6 +41,7 @@ public class ClientImpl implements Client, MessageListener {
     @Override
     public void onMessage(Message message) {
         if(callback != null) {
+            RequestCallback current = callback;
             try {
                 ServerResponse response = message.getBody(ServerResponse.class);
                 if (response.wasSuccessful()) {
@@ -52,7 +53,8 @@ public class ClientImpl implements Client, MessageListener {
                 callback.failure(null);
             }
 
-            callback = null;
+            if(callback == current)
+                callback = null;
         }
     }
 
