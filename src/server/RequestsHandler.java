@@ -16,4 +16,5 @@ public interface RequestsHandler {
 
     Pair<Destination, Message> removeRoom(ServerRequest request);
 
+    Pair<Destination, Message> getRooms(ServerRequest request);
 }

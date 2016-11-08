@@ -1,6 +1,8 @@
 package common.dto;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable {
 
     public User user;
     public String name;
@@ -24,5 +26,10 @@ public class Room {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }
