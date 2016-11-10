@@ -2,7 +2,9 @@ package client.rooms.impl;
 
 import client.Client;
 import client.RequestCallback;
+import client.base.Presenter;
 import client.base.impl.BasePresenter;
+import client.login.impl.LoginPresenterImpl;
 import client.rooms.RoomsPresenter;
 import client.rooms.RoomsView;
 import common.dto.Room;
@@ -85,6 +87,13 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
 
     private void onRoomsMessage(List<Room> roomList){
         getView().setRoomsList(roomList);
+    }
+
+    @Override
+    public void onLogout(){
+        getView().close();
+        Presenter presenter = new LoginPresenterImpl();
+        presenter.initialize(this.getClient());
     }
 
 }
