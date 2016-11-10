@@ -90,7 +90,7 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
             }
         });
 
-        // Rigth mouse click event listener.
+        // Right mouse click event listener.
         jRoomsList.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if ( SwingUtilities.isRightMouseButton(e) ) {

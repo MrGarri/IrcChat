@@ -7,6 +7,7 @@ import client.login.LoginView;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements LoginView {
@@ -36,7 +37,8 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
     protected void initializeFrame(JFrame frame){
 
         // Set graphics settings, like size and position.
-        frame.setSize(300,150);
+        frame.setSize(350,150);
+        frame.setPreferredSize(new Dimension(350,150));
         frame.setLocationRelativeTo(null);
 
         // Set options of the bar buttons.
@@ -44,31 +46,45 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // Show the frame.
+        frame.pack();
         frame.setVisible(true);
     }
 
     protected void initializePanel(JPanel panel){
 
-        panel.setLayout(null);
+        panel.setLayout(new BorderLayout());
+
+        JPanel data = new JPanel(new GridBagLayout());
+
+        GridBagConstraints cs = new GridBagConstraints();
+        cs.fill = GridBagConstraints.HORIZONTAL;
+        JPanel buttonsPanel = new JPanel();
 
         // User elements.
-        JLabel userLabel = new JLabel("Usuario:");
-        userLabel.setBounds(15, 15, 80, 25);
-        panel.add(userLabel);
+        JLabel userLabel = new JLabel("User:");
+        cs.gridx = 0;
+        cs.gridy = 0;
+        cs.gridwidth = 1;
+        data.add(userLabel,cs);
 
         user = new JTextField(20);
-        user.setBounds(95, 15, 190, 25);
-        panel.add(user);
+        cs.gridx = 1;
+        cs.gridy = 0;
+        cs.gridwidth = 2;
+        data.add(user,cs);
 
         // Password elements.
-        JLabel passwordLabel = new JLabel("Contraseña:");
-        passwordLabel.setBounds(15, 50, 80, 25);
-        panel.add(passwordLabel);
+        JLabel passwordLabel = new JLabel("Password:");
+        cs.gridx = 0;
+        cs.gridy = 1;
+        cs.gridwidth = 1;
+        data.add(passwordLabel,cs);
 
         password = new JPasswordField();
-        password.setBounds(95, 50, 190, 25);
-        password.setToolTipText("La contraseña debe de tener un minimo de 6 caracteres.");
-        panel.add(password);
+        cs.gridx = 1;
+        cs.gridy = 1;
+        cs.gridwidth = 2;
+        data.add(password,cs);
 
         // Button elements.
         loginButton = new JButton (new AbstractAction("Login") {
@@ -77,21 +93,22 @@ public class LoginViewImpl extends BaseFrameView<LoginPresenter> implements Logi
             }
         });
 
-
-        loginButton.setBounds(190, 90, 100, 30);
-        panel.add(loginButton);
-
-        registerButton = new JButton (new AbstractAction("Registrar") {
+        registerButton = new JButton (new AbstractAction("Register") {
             public void actionPerformed(ActionEvent e) {
                 getPresenter().onRegister();
             }
         });
 
-        registerButton.setBounds(8, 90, 100, 30);
-        panel.add(registerButton);
+
+        buttonsPanel.add(loginButton);
+        buttonsPanel.add(registerButton);
 
         loginButton.setEnabled(false);
         registerButton.setEnabled(false);
+
+        panel.add(data,BorderLayout.CENTER);
+        panel.add(buttonsPanel,BorderLayout.PAGE_END);
+
 
         DocumentListener listener = new DocumentListener() {
             @Override
