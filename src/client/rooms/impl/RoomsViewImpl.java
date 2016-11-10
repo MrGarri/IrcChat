@@ -46,11 +46,31 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
 
-        JMenuItem exitItem = new JMenuItem(new AbstractAction("Exit...") {
+        JMenuItem exitItem = new JMenuItem(new AbstractAction("Exit") {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
+
+        JMenuItem aboutUsItem = new JMenuItem(new AbstractAction("About us") {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,
+                        "About SwaggaIRC\n\nCreated by @Frildoren, @Garri23_23 & @diegofpb\nand coded with ❤ for Middleware [ETSIINF UPM]\nYear 2016",
+                        "About us",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+
+            }
+        });
+
+        JMenuItem logOutItem = new JMenuItem(new AbstractAction("Logout") {
+            public void actionPerformed(ActionEvent e) {
+                getPresenter().onLogout();
+            }
+        });
+
+        fileMenu.add(aboutUsItem);
+        fileMenu.add(logOutItem);
         fileMenu.add(exitItem);
         menuBar.add(fileMenu);
         frame.setJMenuBar(menuBar);
@@ -90,7 +110,7 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
             }
         });
 
-        // Rigth mouse click event listener.
+        // Right mouse click event listener.
         jRoomsList.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if ( SwingUtilities.isRightMouseButton(e) ) {
