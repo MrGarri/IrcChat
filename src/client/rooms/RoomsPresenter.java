@@ -11,4 +11,6 @@ public interface RoomsPresenter extends Presenter<RoomsView> {
 
     void selectRoom(Room room);
 
+    void onLogout();
+
 }
