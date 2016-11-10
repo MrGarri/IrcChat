@@ -55,7 +55,7 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
         JMenuItem aboutUsItem = new JMenuItem(new AbstractAction("About us") {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null,
-                        "About... SwaggaIRC\n\nCreated by @Frildoren, @Garri23_23 & @diegofpb\nand coded with ❤ for Middleware [ETSIINF UPM]\nYear 2016",
+                        "About SwaggaIRC\n\nCreated by @Frildoren, @Garri23_23 & @diegofpb\nand coded with ❤ for Middleware [ETSIINF UPM]\nYear 2016",
                         "About us",
                         JOptionPane.INFORMATION_MESSAGE
                 );
@@ -65,8 +65,7 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
 
         JMenuItem logOutItem = new JMenuItem(new AbstractAction("Logout") {
             public void actionPerformed(ActionEvent e) {
-                //TODO: Change action.
-                System.exit(0);
+                getPresenter().onLogout();
             }
         });
 
