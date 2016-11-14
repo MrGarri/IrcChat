@@ -86,7 +86,7 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
     public void selectRoom(Room room){
         getView().setTitle(room.getName());
 
-        ChatPresenter chatPresenter = new ChatPresenterImpl() {
+        ChatPresenter chatPresenter = new ChatPresenterImpl(room) {
             @Override
             public void leaveRoom() {
                 //TODO
