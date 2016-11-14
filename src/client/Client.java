@@ -13,5 +13,7 @@ public interface Client {
 
     void setUser(User user);
 
+    User getUser();
+
     CommonDestinations getDestinationsManager();
 }

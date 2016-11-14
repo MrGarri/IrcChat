@@ -70,6 +70,11 @@ public class ClientImpl implements Client, MessageListener {
     }
 
     @Override
+    public User getUser() {
+        return loggedUser;
+    }
+
+    @Override
     public CommonDestinations getDestinationsManager() {
         return destinationsManager;
     }
