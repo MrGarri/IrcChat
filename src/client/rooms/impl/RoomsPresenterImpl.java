@@ -4,6 +4,8 @@ import client.Client;
 import client.RequestCallback;
 import client.base.Presenter;
 import client.base.impl.BasePresenter;
+import client.chat.ChatPresenter;
+import client.chat.impl.ChatPresenterImpl;
 import client.login.impl.LoginPresenterImpl;
 import client.rooms.RoomsPresenter;
 import client.rooms.RoomsView;
@@ -82,11 +84,16 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
 
     @Override
     public void selectRoom(Room room){
-        //TODO
         getView().setTitle(room.getName());
 
+        ChatPresenter chatPresenter = new ChatPresenterImpl() {
+            @Override
+            public void leaveRoom() {
+                //TODO
+            }
+        };
 
-
+        getView().setChatView(chatPresenter.getView());
     }
 
     private void onRoomsMessage(List<Room> roomList){
