@@ -83,6 +83,10 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
     @Override
     public void selectRoom(Room room){
         //TODO
+        getView().setTitle(room.getName());
+
+
+
     }
 
     private void onRoomsMessage(List<Room> roomList){
