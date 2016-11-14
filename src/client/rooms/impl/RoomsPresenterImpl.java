@@ -5,7 +5,11 @@ import client.RequestCallback;
 import client.base.Presenter;
 import client.base.impl.BasePresenter;
 import client.chat.ChatPresenter;
+import client.chat.EmptyChatPresenter;
+import client.chat.EmptyChatView;
 import client.chat.impl.ChatPresenterImpl;
+import client.chat.impl.EmptyChatPresenterImpl;
+import client.chat.impl.EmptyChatViewImpl;
 import client.login.impl.LoginPresenterImpl;
 import client.rooms.RoomsPresenter;
 import client.rooms.RoomsView;
@@ -16,9 +20,13 @@ import common.messages.impl.GetRoomsRequest;
 import common.messages.impl.RemoveRoomRequest;
 
 import javax.jms.JMSException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements RoomsPresenter {
+public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements RoomsPresenter, ChatPresenterImpl.OnLeaveRoomListener {
+
+    Map<Room, ChatPresenter> chatPresenters = new HashMap<>();
 
     @Override
     public void initialize(Client client) {
@@ -85,15 +93,18 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
     @Override
     public void selectRoom(Room room){
         getView().setTitle(room.getName());
+        getView().setChatView(getChatPresenter(room).getView());
+    }
 
-        ChatPresenter chatPresenter = new ChatPresenterImpl(room) {
-            @Override
-            public void leaveRoom() {
-                //TODO
-            }
-        };
+    private ChatPresenter getChatPresenter(Room room){
+        ChatPresenter chatPresenter = chatPresenters.get(room);
+        if(chatPresenter == null){
+            chatPresenter = new ChatPresenterImpl(room, this);
+            chatPresenter.initialize(getClient());
+            chatPresenters.put(room, chatPresenter);
+        }
 
-        getView().setChatView(chatPresenter.getView());
+        return chatPresenter;
     }
 
     private void onRoomsMessage(List<Room> roomList){
@@ -107,4 +118,12 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
         presenter.initialize(this.getClient());
     }
 
+    @Override
+    public void onLeaveRoom(Room room) {
+        getView().setTitle(null);
+
+        EmptyChatPresenter emptyChatPresenter = new EmptyChatPresenterImpl();
+        emptyChatPresenter.initialize(getClient());
+        getView().setChatView(emptyChatPresenter.getView());
+    }
 }
