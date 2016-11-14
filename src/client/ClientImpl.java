@@ -8,6 +8,7 @@ import common.messages.ServerResponse;
 import common.messages.impl.BaseServerRequest;
 
 import javax.jms.*;
+import java.lang.management.ManagementFactory;
 
 public class ClientImpl implements Client, MessageListener {
 
@@ -74,7 +75,7 @@ public class ClientImpl implements Client, MessageListener {
     }
 
     private void run(){
-        responseQueue = context.createQueue(System.getProperty("user.name"));
+        responseQueue = context.createQueue("client_"+ManagementFactory.getRuntimeMXBean().getName().replace('@','-').replace('-','_'));
         context.createConsumer(responseQueue).setMessageListener(this);
 
         Presenter presenter = new LoginPresenterImpl();
