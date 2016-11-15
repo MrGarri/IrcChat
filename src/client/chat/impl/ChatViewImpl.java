@@ -12,7 +12,7 @@ import java.awt.event.FocusEvent;
 
 public class ChatViewImpl extends BaseView<ChatPresenter> implements ChatView {
 
-    private JEditorPane messages;
+    private JTextArea messages;
     private JTextField message;
 
     @Override
@@ -44,7 +44,7 @@ public class ChatViewImpl extends BaseView<ChatPresenter> implements ChatView {
 
         // chatPanel settings.
 
-        messages = new JEditorPane("text/html", "");
+        messages = new JTextArea();
         Font messagesFont = new Font(roomName.getFont().getFontName(), Font.PLAIN, 14);
         messages.setFont(messagesFont);
         messages.setEditable(false);
@@ -84,7 +84,7 @@ public class ChatViewImpl extends BaseView<ChatPresenter> implements ChatView {
 
     @Override
     public void addMessage(String user, String message) {
-        messages.setText(messages.getText()+"<b>"+user+"</b>: "+message+"<br/>");
+        messages.setText(messages.getText()+user+": "+message+"\n");
     }
 
     private void sendMessage() {

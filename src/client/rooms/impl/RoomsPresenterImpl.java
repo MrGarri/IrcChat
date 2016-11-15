@@ -133,6 +133,10 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
     @Override
     public void finish() {
         emptyPresenter.finish();
+        for(Map.Entry<Room, ChatPresenter> entry :chatPresenters.entrySet()){
+            entry.getValue().finish();
+        }
+
         super.finish();
     }
 

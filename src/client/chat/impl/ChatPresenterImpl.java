@@ -7,16 +7,14 @@ import client.chat.ChatView;
 import client.chat.ConversationText;
 import common.dto.Room;
 
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.Topic;
+import javax.jms.*;
 
 public class ChatPresenterImpl extends BasePresenter<ChatView> implements ChatPresenter, MessageListener {
 
     private Room room;
     private Topic roomTopic;
     private OnLeaveRoomListener listener;
+    private JMSConsumer consumer;
 
     public ChatPresenterImpl(Room room, OnLeaveRoomListener listener){
         this.room = room;
@@ -34,7 +32,8 @@ public class ChatPresenterImpl extends BasePresenter<ChatView> implements ChatPr
     public void initialize(Client client) {
         super.initialize(client);
         roomTopic = client.getDestinationsManager().getRoomTopic(room);
-        client.getContext().createSharedDurableConsumer(roomTopic, getClient().getClientID()+room.getName()).setMessageListener(this);
+        consumer = client.getContext().createSharedDurableConsumer(roomTopic, getClient().getClientID()+room.getName());
+        consumer.setMessageListener(this);
     }
 
     @Override
@@ -64,6 +63,12 @@ public class ChatPresenterImpl extends BasePresenter<ChatView> implements ChatPr
         } catch (JMSException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void finish() {
+        consumer.close();
+        super.finish();
     }
 
     public interface OnLeaveRoomListener {
