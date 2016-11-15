@@ -119,6 +119,8 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
 
     @Override
     public void onLeaveRoom(Room room) {
+        chatPresenters.remove(room).finish();
+        
         getView().setTitle(null);
         getView().setChatView(createPresenter(EmptyChatPresenterImpl.class).getView());
     }
