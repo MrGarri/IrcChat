@@ -26,11 +26,15 @@ import java.util.Map;
 
 public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements RoomsPresenter, ChatPresenterImpl.OnLeaveRoomListener {
 
+    EmptyChatPresenter emptyPresenter;
     Map<Room, ChatPresenter> chatPresenters = new HashMap<>();
 
     @Override
     public void initialize(Client client) {
         super.initialize(client);
+
+        emptyPresenter = createPresenter(EmptyChatPresenterImpl.class);
+        getView().setChatView(emptyPresenter.getView());
 
         // Setup listener for room changes from server
         client.getContext().createConsumer(client.getDestinationsManager().getRoomsTopic()).setMessageListener(message -> {
@@ -122,6 +126,12 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
         chatPresenters.remove(room).finish();
         
         getView().setTitle(null);
-        getView().setChatView(createPresenter(EmptyChatPresenterImpl.class).getView());
+        getView().setChatView(emptyPresenter.getView());
+    }
+
+    @Override
+    public void finish() {
+        emptyPresenter.finish();
+        super.finish();
     }
 }
