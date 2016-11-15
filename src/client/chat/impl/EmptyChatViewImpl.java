@@ -11,6 +11,7 @@ public class EmptyChatViewImpl extends BaseView<EmptyChatPresenter> implements E
 
     @Override
     protected void initializePanel(JPanel panel) {
+        panel.setLayout(new BorderLayout());
         panel.setBackground(Color.lightGray);
 
         JLabel noRooms = new JLabel("Select a room to start chatting.");
