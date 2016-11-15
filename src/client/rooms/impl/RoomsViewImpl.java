@@ -165,7 +165,7 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
     }
 
     public void valueChanged(ListSelectionEvent e) {
-        if (jRoomsList.getSelectedIndex() >= 0){
+        if (jRoomsList.getSelectedIndex() >= 0 && !e.getValueIsAdjusting()){
             getPresenter().selectRoom(jRoomsList.getSelectedValue());
             getFrame().setTitle(jRoomsList.getSelectedValue().getName()+" - SwaggaIRC");
         }
