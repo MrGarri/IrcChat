@@ -1,5 +1,6 @@
 package client.rooms.impl;
 
+import client.base.View;
 import client.base.impl.BaseFrameView;
 import client.rooms.RoomsPresenter;
 import client.rooms.RoomsView;
@@ -185,6 +186,19 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
     @Override
     public void setRoomsList(List<Room> roomsList){
         jRoomsList.setListData(roomsList.toArray(new Room[roomsList.size()]));
+    }
+
+    @Override
+    public void setChatView(View view) {
+        //TODO
+        chatPanel.removeAll();
+        chatPanel.add(view.getPanel());
+    }
+
+    @Override
+    public void setTitle(String title) {
+        //TODO
+        getFrame().setTitle(title);
     }
 
 }
