@@ -52,6 +52,11 @@ public class ChatPresenterImpl extends BasePresenter<ChatView> implements ChatPr
     }
 
     @Override
+    public Room getRoom() {
+        return room;
+    }
+
+    @Override
     public void onMessage(Message message) {
         try {
             ConversationText conversationText = message.getBody(ConversationText.class);
