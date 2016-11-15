@@ -13,7 +13,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements RoomsView, ListSelectionListener {
@@ -21,6 +20,7 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
     private JList<Room> jRoomsList;
     private JPanel chatPanel;
     private JSplitPane splitPane;
+    private View chatView;
 
     public RoomsViewImpl(){
         jRoomsList = new JList<>();
@@ -135,13 +135,9 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
 
         //Create the chatPanel, now with only a JText inside. (RIGHT SIDE)
         chatPanel = new JPanel(new BorderLayout());
-        chatPanel.setBackground(Color.lightGray);
-
-        JLabel noRooms = new JLabel("Select a room to start chatting.");
-        noRooms.setHorizontalAlignment(SwingConstants.CENTER);
-        noRooms.setVerticalAlignment(SwingConstants.CENTER);
-        chatPanel.add(noRooms,BorderLayout.CENTER);
-
+        if(chatView != null){
+            chatPanel.add(chatView.getPanel());
+        }
 
         //Create a split pane with the two panels in it.
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
@@ -190,9 +186,13 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
 
     @Override
     public void setChatView(View view) {
-        //TODO
-        chatPanel.removeAll();
-        chatPanel.add(view.getPanel());
+        chatView = view;
+
+        if(chatPanel != null) {
+            chatPanel.removeAll();
+            chatPanel.add(view.getPanel());
+            splitPane.updateUI();
+        }
     }
 
     @Override
