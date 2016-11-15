@@ -33,7 +33,7 @@ public class ChatPresenterImpl extends BasePresenter<ChatView> implements ChatPr
     public void initialize(Client client) {
         super.initialize(client);
         roomTopic = client.getDestinationsManager().getRoomTopic(room);
-        client.getContext().createDurableConsumer(roomTopic, getClient().getUser().getUser()).setMessageListener(this);
+        client.getContext().createSharedDurableConsumer(roomTopic, getClient().getClientID()).setMessageListener(this);
     }
 
     @Override

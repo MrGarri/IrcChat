@@ -40,8 +40,8 @@ public class LoginPresenterImpl extends BasePresenter<LoginView> implements Logi
         getClient().setUser(new User(getView().getUser(), getView().getPassword()));
         getView().close();
 
-        Presenter roomsPresenter = new RoomsPresenterImpl();
-        roomsPresenter.initialize(getClient());
+        createPresenter(RoomsPresenterImpl.class);
+        finish();
     }
 
     @Override

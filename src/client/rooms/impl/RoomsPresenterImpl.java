@@ -113,17 +113,13 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
 
     @Override
     public void onLogout(){
-        getView().close();
-        Presenter presenter = new LoginPresenterImpl();
-        presenter.initialize(this.getClient());
+        createPresenter(LoginPresenterImpl.class);
+        finish();
     }
 
     @Override
     public void onLeaveRoom(Room room) {
         getView().setTitle(null);
-
-        EmptyChatPresenter emptyChatPresenter = new EmptyChatPresenterImpl();
-        emptyChatPresenter.initialize(getClient());
-        getView().setChatView(emptyChatPresenter.getView());
+        getView().setChatView(createPresenter(EmptyChatPresenterImpl.class).getView());
     }
 }
