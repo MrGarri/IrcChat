@@ -20,6 +20,7 @@ public class ChatPresenterImpl extends BasePresenter<ChatView> implements ChatPr
 
     public ChatPresenterImpl(Room room, OnLeaveRoomListener listener){
         this.room = room;
+        this.listener = listener;
     }
 
     @Override
