@@ -1,6 +1,7 @@
 package client;
 
 import client.base.Presenter;
+import client.base.impl.BasePresenter;
 import client.login.impl.LoginPresenterImpl;
 import common.*;
 import common.dto.User;
@@ -21,6 +22,7 @@ public class ClientImpl implements Client, MessageListener {
 
     public ClientImpl(JMSContext context){
         this.context = context;
+        context.setClientID(getClientID());
         destinationsManager = new DestinationsManager(context);
     }
 
@@ -79,12 +81,16 @@ public class ClientImpl implements Client, MessageListener {
         return destinationsManager;
     }
 
+    @Override
+    public String getClientID(){
+        return "client_"+ManagementFactory.getRuntimeMXBean().getName().replace('@','-').replace('-','_');
+    }
+
     private void run(){
-        responseQueue = context.createQueue("client_"+ManagementFactory.getRuntimeMXBean().getName().replace('@','-').replace('-','_'));
+        responseQueue = context.createQueue(getClientID());
         context.createConsumer(responseQueue).setMessageListener(this);
 
-        Presenter presenter = new LoginPresenterImpl();
-        presenter.initialize(this);
+        BasePresenter.createPresenter(this, LoginPresenterImpl.class);
     }
 
     public static void main(String[] args){

@@ -16,4 +16,6 @@ public interface Client {
     User getUser();
 
     CommonDestinations getDestinationsManager();
+
+    String getClientID();
 }
