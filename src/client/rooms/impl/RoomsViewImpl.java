@@ -163,7 +163,6 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
     public void valueChanged(ListSelectionEvent e) {
         if (jRoomsList.getSelectedIndex() >= 0 && !e.getValueIsAdjusting()){
             getPresenter().selectRoom(jRoomsList.getSelectedValue());
-            getFrame().setTitle(jRoomsList.getSelectedValue().getName()+" - SwaggaIRC");
         }
     }
 
@@ -192,13 +191,22 @@ public class RoomsViewImpl extends BaseFrameView<RoomsPresenter> implements Room
             chatPanel.removeAll();
             chatPanel.add(view.getPanel());
             splitPane.updateUI();
+            chatView.getPanel().requestFocus();
         }
     }
 
     @Override
     public void setTitle(String title) {
-        //TODO
-        getFrame().setTitle(title);
+        if (title == null){
+            getFrame().setTitle(getTitle());
+        } else {
+            getFrame().setTitle(title + " - " + getTitle());
+        }
+    }
+
+    @Override
+    public void clearRoomSelection(){
+        jRoomsList.clearSelection();
     }
 
 }

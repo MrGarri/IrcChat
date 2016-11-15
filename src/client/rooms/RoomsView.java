@@ -12,4 +12,5 @@ public interface RoomsView extends FrameView<RoomsPresenter> {
     void setChatView(View view);
     void setTitle(String title);
 
+    void clearRoomSelection();
 }

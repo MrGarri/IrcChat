@@ -127,6 +127,7 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
         
         getView().setTitle(null);
         getView().setChatView(emptyPresenter.getView());
+        getView().clearRoomSelection();
     }
 
     @Override
@@ -134,4 +135,6 @@ public class RoomsPresenterImpl extends BasePresenter<RoomsView> implements Room
         emptyPresenter.finish();
         super.finish();
     }
+
+
 }
