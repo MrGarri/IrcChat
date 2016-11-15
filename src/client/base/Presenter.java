@@ -6,5 +6,6 @@ public interface Presenter <V extends View>{
 
     void initialize(Client client);
     V getView();
+    void finish();
 
 }
